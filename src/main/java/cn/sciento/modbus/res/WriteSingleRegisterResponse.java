@@ -1,12 +1,12 @@
 
 package cn.sciento.modbus.res;
 
-import java.nio.ByteBuffer;
+import cn.sciento.modbus.cm.FunctionCode;
+import cn.sciento.modbus.cm.MbapHeader;
+import cn.sciento.modbus.utils.ByteUtils;
+import cn.sciento.modbus.utils.ModbusUtils;
 
-import jrain.modbus.cm.FunctionCode;
-import jrain.modbus.cm.MbapHeader;
-import jrain.modbus.utils.ByteUtils;
-import jrain.modbus.utils.ModbusUtils;
+import java.nio.ByteBuffer;
 
 /**
  * <pre>
@@ -26,6 +26,7 @@ public class WriteSingleRegisterResponse implements ModbusResponse {
 		this.value = value;
 	}
 
+	@Override
 	public int getDeviceId() {
 		return deviceId;
 	}
@@ -38,10 +39,12 @@ public class WriteSingleRegisterResponse implements ModbusResponse {
 		return value;
 	}
 
+	@Override
 	public FunctionCode getFunctionCode() {
 		return FunctionCode.WriteSingleRegister;
 	}
 
+	@Override
 	public byte[] getRtuBytes() {
 		ByteBuffer buffer = ByteBuffer.allocate(8);
 		writeDeviceIdAndPdu(buffer);
@@ -49,6 +52,7 @@ public class WriteSingleRegisterResponse implements ModbusResponse {
 		return buffer.array();
 	}
 
+	@Override
 	public byte[] getAsciiBytes() {
 		ByteBuffer rtu = ByteBuffer.allocate(6);
 		writeDeviceIdAndPdu(rtu);
@@ -63,6 +67,7 @@ public class WriteSingleRegisterResponse implements ModbusResponse {
 		return buffer.array();
 	}
 
+	@Override
 	public byte[] getTcpBytes(MbapHeader header) {
 		ByteBuffer buffer = ByteBuffer.allocate(5 + MbapHeader.LENGTH);
 		header.setLength(5+3);
@@ -71,12 +76,14 @@ public class WriteSingleRegisterResponse implements ModbusResponse {
 		return buffer.array();
 	}
 
+	@Override
 	public void writeDeviceIdAndPdu(ByteBuffer buffer) {
 		// deviceId
 		buffer.put(ByteUtils.getByte1(deviceId));
 		writePdu(buffer);
 	}
 
+	@Override
 	public void writePdu(ByteBuffer buffer) {
 		// funcCode
 		buffer.put(ByteUtils.getByte1(getFunctionCode().getCode()));

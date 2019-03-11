@@ -1,6 +1,6 @@
 package cn.sciento.modbus.res;
 
-import jrain.modbus.cm.ModbusAdu;
+import cn.sciento.modbus.cm.ModbusAdu;
 
 /**
  * <pre>

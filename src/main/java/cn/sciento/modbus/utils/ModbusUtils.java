@@ -62,8 +62,9 @@ public class ModbusUtils {
 			end = bytes.length;
 		}
 		int lrc = 0;
-		for (int i = 0; i < end; i++)
+		for (int i = 0; i < end; i++) {
 			lrc -= bytes[(i + start)];
+		}
 		return (byte) (lrc & 0xff);
 	}
 

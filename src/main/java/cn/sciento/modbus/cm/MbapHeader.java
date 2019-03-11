@@ -1,8 +1,9 @@
 package cn.sciento.modbus.cm;
 
+import cn.sciento.modbus.utils.ByteUtils;
+
 import java.nio.ByteBuffer;
 
-import jrain.modbus.utils.ByteUtils;
 
 
 /**

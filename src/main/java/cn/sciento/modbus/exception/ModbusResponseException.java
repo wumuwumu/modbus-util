@@ -1,6 +1,7 @@
 package cn.sciento.modbus.exception;
 
-import jrain.modbus.res.ExceptionResponse;
+
+import cn.sciento.modbus.res.ExceptionResponse;
 
 /**
  * <pre>

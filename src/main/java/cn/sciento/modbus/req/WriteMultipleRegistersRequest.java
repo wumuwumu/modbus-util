@@ -1,11 +1,11 @@
 package cn.sciento.modbus.req;
 
-import java.nio.ByteBuffer;
+import cn.sciento.modbus.cm.FunctionCode;
+import cn.sciento.modbus.cm.MbapHeader;
+import cn.sciento.modbus.utils.ByteUtils;
+import cn.sciento.modbus.utils.ModbusUtils;
 
-import jrain.modbus.cm.FunctionCode;
-import jrain.modbus.cm.MbapHeader;
-import jrain.modbus.utils.ByteUtils;
-import jrain.modbus.utils.ModbusUtils;
+import java.nio.ByteBuffer;
 
 /**
  * <pre>
@@ -29,6 +29,7 @@ public class WriteMultipleRegistersRequest implements ModbusRequest {
 		this.values = values;
 	}
 
+	@Override
 	public int getDeviceId() {
 		return deviceId;
 	}
@@ -49,10 +50,12 @@ public class WriteMultipleRegistersRequest implements ModbusRequest {
 		return values;
 	}
 
+	@Override
 	public FunctionCode getFunctionCode() {
 		return FunctionCode.WriteMultipleRegisters;
 	}
 
+	@Override
 	public byte[] getRtuBytes() {
 		// deviceId(1)+funcCode(1)+address(2)+NUM(2)+length(1)+CRC(2)=9
 		ByteBuffer buffer = ByteBuffer.allocate(values.length + 9);
@@ -76,6 +79,7 @@ public class WriteMultipleRegistersRequest implements ModbusRequest {
 		return buffer.array();
 	}
 	
+	@Override
 	public byte[] getTcpBytes(MbapHeader header) {
 		ByteBuffer buffer = ByteBuffer.allocate(values.length + 6 + MbapHeader.LENGTH);
 		header.setLength(values.length+6+3);
@@ -84,12 +88,14 @@ public class WriteMultipleRegistersRequest implements ModbusRequest {
 		return buffer.array();
 	}
 
+	@Override
 	public void writeDeviceIdAndPdu(ByteBuffer buffer) {
 		// deviceId
 		buffer.put(ByteUtils.getByte1(deviceId));
 		writePdu(buffer);
 	}
 
+	@Override
 	public void writePdu(ByteBuffer buffer) {
 		// funcCode
 		buffer.put(ByteUtils.getByte1(getFunctionCode().getCode()));
